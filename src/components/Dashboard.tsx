@@ -79,7 +79,7 @@ const Dashboard: React.FC<DashboardProps> = ({ expenses }) => {
             <p className="text-2xl font-semibold text-gray-800">
               Spending by Category (Multi-Line Chart)
             </p>
-            <div className="mt-4">
+            <div className="mt-4 mb-2">
               <Line data={chartData} />
             </div>
           </section>
