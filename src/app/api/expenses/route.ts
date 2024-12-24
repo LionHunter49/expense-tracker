@@ -50,3 +50,18 @@ export async function PUT(req: Request) {
   return NextResponse.json(data.expenses[expenseIndex]);
 }
 
+export async function DELETE(req: Request) {
+  const { id } = await req.json();
+
+  const data = readExpenses(); 
+  const expenseIndex = data.expenses.findIndex((expense: any) => expense.id === id);
+
+  if (expenseIndex === -1) {
+    return NextResponse.json({ error: 'Expense not found' }, { status: 404 });
+  }
+
+  data.expenses.splice(expenseIndex, 1); 
+  writeExpenses(data); 
+
+  return NextResponse.json({ message: 'Expense deleted successfully', id });
+}
