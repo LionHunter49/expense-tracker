@@ -18,3 +18,18 @@ export async function GET() {
   return NextResponse.json(data);
 }
 
+export async function POST(req: Request) {
+  const body = await req.json();
+  const data = readExpenses();
+
+  const newExpense = {
+    ...body,
+    id: Date.now().toString(), 
+  };
+
+  data.expenses.push(newExpense);
+  writeExpenses(data);
+
+  return NextResponse.json(newExpense);
+}
+
