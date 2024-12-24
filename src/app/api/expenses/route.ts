@@ -33,3 +33,20 @@ export async function POST(req: Request) {
   return NextResponse.json(newExpense);
 }
 
+export async function PUT(req: Request) {
+  const body = await req.json();
+  const { id, ...updatedExpense } = body;
+
+  const data = readExpenses();
+  const expenseIndex = data.expenses.findIndex((expense: any) => expense.id === id);
+
+  if (expenseIndex === -1) {
+    return NextResponse.json({ error: 'Expense not found' }, { status: 404 });
+  }
+
+  data.expenses[expenseIndex] = { ...data.expenses[expenseIndex], ...updatedExpense };
+  writeExpenses(data);
+
+  return NextResponse.json(data.expenses[expenseIndex]);
+}
+
